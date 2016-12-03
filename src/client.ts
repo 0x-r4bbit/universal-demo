@@ -5,28 +5,18 @@ import './__workaround.browser'; // temporary until 2.1.1 things are patched in 
 
 // Angular 2
 import { enableProdMode } from '@angular/core';
-import { platformUniversalDynamic } from 'angular2-universal/browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { bootloader } from '@angularclass/bootloader';
 
-import { load as loadWebFont } from 'webfontloader';
-
 // enable prod for faster renders
-// enableProdMode();
+enableProdMode();
 
 import { MainModule } from './browser.module';
 
-export const platformRef = platformUniversalDynamic();
+export const platformRef = platformBrowserDynamic();
 
 // on document ready bootstrap Angular 2
 export function main() {
-  // Load fonts async
-  // https://github.com/typekit/webfontloader#configuration
-  loadWebFont({
-    google: {
-      families: ['Droid Sans']
-    }
-  });
-
   return platformRef.bootstrapModule(MainModule);
 }
 

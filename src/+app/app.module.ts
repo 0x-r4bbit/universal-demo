@@ -1,25 +1,12 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { HomeModule } from './+home/home.module';
-import { AboutModule } from './+about/about.module';
-import { TodoModule } from './+todo/todo.module';
-
-import { SharedModule } from './shared/shared.module';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent, XLargeDirective } from './app.component';
+import { CommonModule } from '@angular/common';
+import { AppComponent } from './app.component';
+import { SquareBoxComponent } from './square-box.component';
 
 
 @NgModule({
-  declarations: [ AppComponent, XLargeDirective ],
-  imports: [
-    SharedModule,
-    HomeModule,
-    AboutModule,
-    TodoModule,
-    AppRoutingModule
-  ]
+  declarations: [ AppComponent, SquareBoxComponent ],
+  imports: [CommonModule]
 })
 export class AppModule {
 }

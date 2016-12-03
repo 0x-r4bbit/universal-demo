@@ -32,13 +32,7 @@ const ROOT = path.join(path.resolve(__dirname, '..'));
 
 // Express View
 app.engine('.html', createEngine({
-  ngModule: MainModule,
-  providers: [
-    // use only if you have shared state between users
-    // { provide: 'LRU', useFactory: () => new LRU(10) }
-
-    // stateless providers only since it's shared
-  ]
+  ngModule: MainModule
 }));
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname);
@@ -60,24 +54,10 @@ function cacheControl(req, res, next) {
 app.use('/assets', cacheControl, express.static(path.join(__dirname, 'assets'), {maxAge: 30}));
 app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: false}));
 
-//
-/////////////////////////
-// ** Example API
-// Notice API should be in aseparate process
-import { serverApi, createTodoApi } from './backend/api';
-// Our API for demos only
-app.get('/data.json', serverApi);
-app.use('/api', createTodoApi());
-
 function ngApp(req, res) {
   res.render('index', {
     req,
-    res,
-    // time: true, // use this to determine what part of your app is slow only in development
-    preboot: false,
-    baseUrl: '/',
-    requestUrl: req.originalUrl,
-    originUrl: `http://localhost:${ app.get('port') }`
+    res
   });
 }
 
@@ -85,10 +65,6 @@ function ngApp(req, res) {
  * use universal for specific routes
  */
 app.get('/', ngApp);
-routes.forEach(route => {
-  app.get(`/${route}`, ngApp);
-  app.get(`/${route}/*`, ngApp);
-});
 
 app.get('*', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
