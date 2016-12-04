@@ -1,8 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+import { CacheService } from'./cache.service';
 
 @Component({
   selector: 'app',
@@ -28,15 +25,10 @@ export class AppComponent {
   offsetX;
   offsetY;
 
+  constructor(private cache: CacheService) {}
 
   ngOnInit() {
-    for (let i=0; i < 5000; i++) {
-      const id = i;
-      const x = getRandomInt(0, 500);
-      const y = getRandomInt(0, 500);
-      const box = { id, x, y };
-      this.boxes.push(box);
-    }
+    this.boxes = this.cache.get('boxes');
   }
 
   mouseDown(event) {
