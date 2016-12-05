@@ -37,20 +37,8 @@ export class MainModule {
     // browser
     const win: any = window;
     if (win[UNIVERSAL_KEY] && win[UNIVERSAL_KEY][key]) {
-      let serverCache = defaultValue;
-      try {
-        serverCache = JSON.parse(win[UNIVERSAL_KEY][key]);
-        if (typeof serverCache !== typeof defaultValue) {
-          console.log('Angular Universal: The type of data from the server is different from the default value type');
-          serverCache = defaultValue;
-        }
-      } catch (e) {
-        console.log('Angular Universal: There was a problem parsing the server data during rehydrate');
-        serverCache = defaultValue;
-      }
+      let serverCache = JSON.parse(win[UNIVERSAL_KEY][key]);
       return serverCache;
-    } else {
-      console.log('Angular Universal: UNIVERSAL_CACHE is missing');
     }
     return defaultValue;
   }
